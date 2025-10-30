@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# amplify
+.amplify
+amplify_outputs*
+amplifyconfiguration*
+
+
+#Ignore vscode AI rules
+.github/instructions/codacy.instructions.md
