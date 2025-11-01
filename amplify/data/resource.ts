@@ -1,27 +1,30 @@
-import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
-
+import { type ClientSchema, a, defineData } from "@aws-amplify/backend";
+import { postConfirmation } from "../auth/post-confirmation/resources";
 /*== STEP 1 ===============================================================
 The section below creates a Todo database table with a "content" field. Try
 adding a new "isDone" field as a boolean. The authorization rule below
 specifies that any unauthenticated user can "create", "read", "update",
 and "delete" any "Todo" records.
 =========================================================================*/
-const schema = a.schema({
-  Todo: a
-    .model({
-      content: a.string(),
-      isDone: a.boolean().default(false),
+const schema = a
+    .schema({
+        UserProfile: a
+            .model({
+                username: a.string().required(),
+                email: a.string().required(),
+                profileOwner: a.string(),
+            })
+            .authorization((allow) => [allow.ownerDefinedIn("profileOwner")]),
     })
-    .authorization((allow) => [allow.guest()]),
-});
+    .authorization((allow) => [allow.resource(postConfirmation)]);
 
 export type Schema = ClientSchema<typeof schema>;
 
 export const data = defineData({
-  schema,
-  authorizationModes: {
-    defaultAuthorizationMode: 'identityPool',
-  },
+    schema,
+    authorizationModes: {
+        defaultAuthorizationMode: "identityPool",
+    },
 });
 
 /*== STEP 2 ===============================================================
@@ -38,6 +41,7 @@ cases: https://docs.amplify.aws/gen2/build-a-backend/data/connect-to-API/
 "use client"
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "@/amplify/data/resource";
+import { string } from '../../node_modules/@aws-amplify/data-schema/src/ModelField';
 
 const client = generateClient<Schema>() // use this Data client for CRUDL requests
 */
