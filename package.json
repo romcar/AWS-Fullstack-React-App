@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npx ampx generate outputs --branch main && vite build",
+    "build": "npx ampx generate outputs --branch main --app-id d3keookxisql9u && vite build",
     "build:local": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
