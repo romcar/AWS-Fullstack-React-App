@@ -1,4 +1,5 @@
 import { defineAuth } from "@aws-amplify/backend";
+import { preSignUp } from "./pre-sign-up/resources";
 
 /**
  * Define and configure your auth resource
@@ -30,5 +31,10 @@ export const auth = defineAuth({
             mutable: true,
             required: false,
         },
+    },
+    triggers: {
+        // NOTE In order to generate the env files for triggers you need to define them here. If
+        // not present here you will get an error that the env files in .amplify were not found.
+        preSignUp,
     },
 });
